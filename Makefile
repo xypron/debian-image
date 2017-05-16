@@ -1,7 +1,7 @@
-all: prepare mount debootstrap mount2 copy flash unmount
+all: prepare mount debootstrap mount2 copy flash unmount compress
 
 prepare:
-	sudo rm -f image
+	sudo rm -f image image.*
 	sudo dd if=/dev/zero of=image bs=1024 seek=3906249 count=1
 	sudo sfdisk image < partioning
 	sudo losetup -o 1048576 --sizelimit 1072693248 /dev/loop1 image
@@ -38,9 +38,14 @@ flash:
 	  ./sd_fusing.sh ../../../../../image
 
 unmount:
+	sync
 	sudo umount mnt/sys || true
 	sudo umount mnt/proc || true
 	sudo umount mnt/boot || true
 	sudo umount mnt || true
 	sudo losetup -d /dev/loop2 || true
 	sudo losetup -d /dev/loop1 || true
+
+compress:
+	sha512sum image > image.sha512
+	xz -k image
