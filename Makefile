@@ -1,4 +1,4 @@
-all: prepare mount debootstrap mount2 copy unmount
+all: prepare mount debootstrap mount2 copy flash unmount
 
 prepare:
 	sudo rm -f image
@@ -6,7 +6,7 @@ prepare:
 	sudo sfdisk image < partioning
 	sudo losetup -o 1048576 --sizelimit 1072693248 /dev/loop1 image
 	sudo losetup -o 1073741824 /dev/loop2 image
-	sudo mkfs.ext3 -L boot -U 9026d986-86a1-43f9-9322-c3e7baf355d9 /dev/loop1
+	sudo mkfs.ext2 -L boot -U 9026d986-86a1-43f9-9322-c3e7baf355d9 /dev/loop1
 	sudo mkfs.ext4 -L root -U 83289271-c790-4c10-9582-bd82a4154394 /dev/loop2
 	sudo losetup -d /dev/loop2 || true
 	sudo losetup -d /dev/loop1 || true
@@ -32,6 +32,10 @@ copy:
 	sudo cp setup.sh mnt
 	sudo chroot mnt ./setup.sh
 	sudo rm mnt/setup.sh
+
+flash:
+	cd mnt/usr/lib/u-boot/odroid-c2/ && \
+	  ./sd_fusing.sh ../../../../../image
 
 unmount:
 	sudo umount mnt/sys || true
