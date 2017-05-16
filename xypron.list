@@ -1,0 +1,3 @@
+deb http://debian.xypron.de/ unstable/all/
+deb http://debian.xypron.de/ unstable/arm64/
+deb-src http://debian.xypron.de/ unstable/source/
