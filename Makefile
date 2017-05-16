@@ -27,6 +27,7 @@ mount2:
 
 copy:
 	sudo cp fstab mnt/etc/
+	sudo cp flash-kernel /mnt/etc/default/
 	sudo cp xypron.list mnt/etc/apt/sources.list.d/
 	sudo cp xypron mnt/etc/apt/preferences.d/
 	sudo cp setup.sh mnt
