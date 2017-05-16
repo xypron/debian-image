@@ -31,6 +31,7 @@ copy:
 	sudo cp xypron mnt/etc/apt/preferences.d/
 	sudo cp setup.sh mnt
 	sudo chroot mnt ./setup.sh
+	sudo rm mnt/setup.sh
 
 unmount:
 	sudo umount mnt/sys || true
