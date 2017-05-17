@@ -49,4 +49,4 @@ unmount:
 
 compress:
 	sha512sum image > image.sha512
-	xz -k image
+	xz -9 -k image
