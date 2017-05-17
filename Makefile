@@ -26,6 +26,7 @@ mount2:
 	sudo mount --bind /sys mnt/sys || true
 
 copy:
+	sudo cp eth0 mnt/etc/network/interfaces.d/
 	sudo cp fstab mnt/etc/
 	sudo cp flash-kernel mnt/etc/default/
 	sudo cp xypron.list mnt/etc/apt/sources.list.d/
@@ -49,4 +50,4 @@ unmount:
 
 compress:
 	sha512sum image > image.sha512
-	xz -9 -k image
+	fakeroot xz -9 -k image
