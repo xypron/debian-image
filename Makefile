@@ -30,7 +30,8 @@ copy:
 	sudo cp fstab mnt/etc/
 	sudo cp flash-kernel mnt/etc/default/
 	sudo cp xypron.list mnt/etc/apt/sources.list.d/
-	sudo cp xypron mnt/etc/apt/preferences.d/
+	sudo mkdir -p mnt/etc/flash-kernel/ubootenv.d/
+	sudo cp fdtfile mnt/etc/flash-kernel/ubootenv.d/
 	sudo cp setup.sh mnt
 	sudo chroot mnt ./setup.sh
 	sudo rm mnt/setup.sh
