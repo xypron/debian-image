@@ -6,7 +6,7 @@ for the Hardkernel Odroid C2 on an arm64 system.
 
 The following command installs the dependencies:
 
-    sudo apt-get install debootstrap fakeroot xz-utils
+    sudo apt-get install debootstrap dosfstools fakeroot xz-utils
 
 To create the SD card image execute
 
