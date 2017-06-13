@@ -1,4 +1,12 @@
-all: prepare mount debootstrap mount2 copy flash unmount compress
+all:
+	make prepare
+	make mount
+	make debootstrap
+	make mount2
+	make copy
+	make flash
+	make unmount
+	make compress
 
 prepare:
 	sudo rm -f image image.*
