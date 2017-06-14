@@ -45,8 +45,12 @@ copy:
 	sudo rm mnt/setup.sh
 
 flash:
-	cd mnt/usr/lib/u-boot/odroid-c2/ && \
-	  ./sd_fusing.sh ../../../../../image
+	sudo dd if=mnt/usr/lib/u-boot/odroid-c2/bl1.bin.hardkernel \
+	  of=image conv=fsync,notrunc bs=1 count=442
+	sudo dd if=mnt/usr/lib/u-boot/odroid-c2/bl1.bin.hardkernel \
+	  of=image conv=fsync,notrunc bs=512 skip=1 seek=1
+	sudo dd if=mnt/usr/lib/u-boot/odroid-c2/u-boot.bin \
+	  of=image conv=fsync,notrunc bs=512 seek=97
 
 unmount:
 	sync
