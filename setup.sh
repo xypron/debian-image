@@ -2,7 +2,7 @@
 apt-get update
 apt-get install xypron-keyring --allow-unauthenticated -y
 apt-get update
-apt-get install less locales ssh sudo vim -y
+apt-get install less locales ssh sudo vim ca-certificates -y
 apt-get install flash-kernel -y
 apt-get install odroid-c2-u-boot-image -y
 apt-get install linux-image-arm64 --reinstall -y
