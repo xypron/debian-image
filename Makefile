@@ -12,24 +12,30 @@ prepare:
 	sudo rm -f image image.*
 	sudo dd if=/dev/zero of=image bs=1024 seek=3145727 count=1
 	sudo sfdisk image < partioning
-	sudo losetup -o 1048576 --sizelimit 535822336 /dev/loop1 image
-	sudo losetup -o 536870912 /dev/loop2 image
-	sudo mkfs.ext2 -L boot -U 9026d986-86a1-43f9-9322-c3e7baf355d9 /dev/loop1
-	sudo mkfs.ext4 -L root -U 83289271-c790-4c10-9582-bd82a4154394 /dev/loop2
+	sudo losetup -o 1048576 --sizelimit 133169152 /dev/loop1 image
+	sudo losetup -o 134217728 --sizelimit 402653184 /dev/loop2 image
+	sudo losetup -o 536870912 /dev/loop3 image
+	sudo mkfs.vfat -i 1f97b63b /dev/loop1
+	sudo mkfs.ext2 -L boot -U 84185ebb-74ba-4879-93ba-56adcdfbe8c7 /dev/loop2
+	sudo mkfs.ext4 -L root -U afa724eb-deb7-4779-ba7d-b6553f4e34d3 /dev/loop3
+	sudo losetup -d /dev/loop3 || true
 	sudo losetup -d /dev/loop2 || true
 	sudo losetup -d /dev/loop1 || true
 
 mount:
-	sudo losetup -o 1048576 --sizelimit 535822336 /dev/loop1 image
-	sudo losetup -o 536870912 /dev/loop2 image
+	sudo losetup -o 1048576 --sizelimit 133169152 /dev/loop1 image
+	sudo losetup -o 134217728 --sizelimit 402653184 /dev/loop2 image
+	sudo losetup -o 536870912 /dev/loop3 image
 	sudo mkdir -p mnt
-	sudo mount /dev/loop2 mnt
+	sudo mount /dev/loop3 mnt
 
 debootstrap:
-	sudo debootstrap --arch arm64 stretch mnt http://ftp.de.debian.org/debian/
+	sudo debootstrap --arch arm64 buster mnt http://ftp.de.debian.org/debian/
 
 mount2:
-	sudo mount /dev/loop1 mnt/boot || true
+	sudo mount /dev/loop2 mnt/boot || true
+	sudo mkdir -p mnt/boot/efi
+	sudo mount /dev/loop1 mnt/boot/efi || true
 
 copy:
 	sudo cp eth0 mnt/etc/network/interfaces.d/
@@ -56,8 +62,10 @@ unmount:
 	sync
 	sudo umount mnt/sys || true
 	sudo umount mnt/proc || true
+	sudo umount mnt/boot/efi || true
 	sudo umount mnt/boot || true
 	sudo umount mnt || true
+	sudo losetup -d /dev/loop3 || true
 	sudo losetup -d /dev/loop2 || true
 	sudo losetup -d /dev/loop1 || true
 
