@@ -1,5 +1,5 @@
 #!/bin/sh
-apt-get update
+apt-get update --allow-insecure-repositories
 apt-get install xypron-keyring --allow-unauthenticated -y
 apt-get update
 apt-get install less locales ssh sudo vim ca-certificates open-iscsi dnsutils \
