@@ -8,7 +8,7 @@ all:
 	make unmount
 	make compress
 
-prepare:
+prepare: unmount
 	sudo rm -f image image.*
 	sudo dd if=/dev/zero of=image bs=1024 seek=3145727 count=1
 	sudo sfdisk image < partioning
@@ -73,5 +73,5 @@ compress:
 	sha512sum image > image.sha512
 	fakeroot xz -9 -k image
 
-clean:
+clean: unmount
 	sudo rm -f image image.*
