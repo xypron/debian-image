@@ -2,11 +2,15 @@ Build Debian SD card image for the Odroid C2
 ============================================
 
 This project provides files to generate a Debian SD card image
-for the Hardkernel Odroid C2 on an arm64 system.
+for the Hardkernel Odroid C2.
 
 The following command installs the dependencies:
 
     sudo apt-get install debootstrap dosfstools fakeroot xz-utils
+
+When building on an architecture other than arm64 QEMU is needed:
+
+    sudo apt-get install qemu-user-static
 
 To create the SD card image execute
 

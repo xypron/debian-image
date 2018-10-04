@@ -1,9 +1,21 @@
+
+MK_ARCH="${shell uname -m}"
+ifeq ("arm64", $(MK_ARCH))
+	undefine FOREIGN
+	export STAGE2=stage2
+else
+	export FOREIGN="--foreign"
+	export STAGE2=stage2_qemu
+endif
+undefine MK_ARCH
+
 all:
 	make prepare
 	make mount
 	make debootstrap
 	make mount2
 	make copy
+	make $(STAGE2)
 	make flash
 	make unmount
 	make compress
@@ -30,7 +42,8 @@ mount:
 	sudo mount /dev/loop3 mnt
 
 debootstrap:
-	sudo debootstrap --arch arm64 buster mnt http://ftp.de.debian.org/debian/
+	sudo debootstrap $(FOREIGN) --arch arm64 buster mnt \
+	  http://ftp.de.debian.org/debian/
 
 mount2:
 	sudo mount /dev/loop2 mnt/boot || true
@@ -38,6 +51,7 @@ mount2:
 	sudo mount /dev/loop1 mnt/boot/efi || true
 
 copy:
+	sudo mkdir -p mnt/etc/network/interfaces.d/
 	sudo cp eth0 mnt/etc/network/interfaces.d/
 	sudo cp fstab mnt/etc/
 	sudo cp flash-kernel mnt/etc/default/
@@ -46,8 +60,20 @@ copy:
 	sudo cp fdtfile mnt/etc/flash-kernel/ubootenv.d/
 	sudo mkdir -p mnt/proc/device-tree/
 	sudo cp model mnt/proc/device-tree/
+
+stage2:
 	sudo cp setup.sh mnt
 	sudo chroot mnt ./setup.sh
+	sudo rm -f mnt/setup.sh
+
+stage2_qemu:
+	sudo cp setup.sh mnt
+	sudo cp /usr/bin/qemu-aarch64-static mnt/usr/bin
+	test ! -f mnt/debootstrap/debootstrap || \
+	sudo chroot mnt /bin/bash /debootstrap/debootstrap --second-stage
+	sudo cp /usr/bin/qemu-aarch64-static mnt/usr/bin
+	sudo chroot mnt /usr/bin/qemu-aarch64-static /bin/bash ./setup.sh
+	sudo rm /usr/bin/qemu-aarch64-static mnt/usr/bin
 	sudo rm mnt/setup.sh
 
 flash:
