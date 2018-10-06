@@ -73,7 +73,7 @@ stage2_qemu:
 	sudo chroot mnt /bin/bash /debootstrap/debootstrap --second-stage
 	sudo cp /usr/bin/qemu-aarch64-static mnt/usr/bin
 	sudo chroot mnt /usr/bin/qemu-aarch64-static /bin/bash ./setup.sh
-	sudo rm /usr/bin/qemu-aarch64-static mnt/usr/bin
+	sudo rm /usr/bin/qemu-aarch64-static
 	sudo rm mnt/setup.sh
 
 flash:
@@ -86,6 +86,8 @@ flash:
 
 unmount:
 	sync
+	sudo umount mnt/dev/pts || true
+	sudo umount mnt/dev || true
 	sudo umount mnt/sys || true
 	sudo umount mnt/proc || true
 	sudo umount mnt/boot/efi || true
