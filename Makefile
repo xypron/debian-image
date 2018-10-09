@@ -100,8 +100,9 @@ unmount:
 	sudo losetup -d /dev/loop1 || true
 
 compress:
-	sha512sum image > image.sha512
 	fakeroot xz -9 -k image
+	sha512sum image.xz image > image.sha512
+	gpg -ab image.sha512
 
 clean: unmount
 	sudo rm -f image image.*
