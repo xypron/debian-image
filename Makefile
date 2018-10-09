@@ -55,6 +55,8 @@ copy:
 	sudo cp eth0 mnt/etc/network/interfaces.d/
 	sudo cp fstab mnt/etc/
 	sudo cp flash-kernel mnt/etc/default/
+	sudo cp hostname /etc/hostname
+	sudo cp hosts /etc/hosts
 	sudo cp xypron.list mnt/etc/apt/sources.list.d/
 	sudo mkdir -p mnt/etc/flash-kernel/ubootenv.d/
 	sudo cp fdtfile mnt/etc/flash-kernel/ubootenv.d/
