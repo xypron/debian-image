@@ -32,7 +32,7 @@ The created image file is called *image*.
 
 To copy the image to an SD card use
 
-    sudo if=image of=/dev/sdX bs=16M
+    sudo dd iflag=dsync oflag=dsync if=image of=/dev/sdX bs=16M
 
 Replace /dev/sdX by the actual device.
 **Beware of overwriting your harddisk by specifying the wrong device.**
