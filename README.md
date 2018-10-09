@@ -16,8 +16,9 @@ To create the SD card image execute
 
     make
 
-A new image is created with two partions:
+A new image is created with three partions:
 
+- efi partition
 - boot partition
 - root partition
 
@@ -35,3 +36,14 @@ To copy the image to an SD card use
 
 Replace /dev/sdX by the actual device.
 **Beware of overwriting your harddisk by specifying the wrong device.**
+
+After first boot
+----------------
+
+Change the password of user odroid.
+
+    passwd
+
+You can enlarge the root partition: Use fdisk to delete partition 3 and recreate
+it with the same start sector. **Do not delete the signature.**
+Use resize2fs to resize the file system to match the partition size.
