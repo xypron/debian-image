@@ -1,2 +1,0 @@
-# Workaround for Debian bug #860304
-setenv fdtfile meson-gxbb-odroidc2.dtb
