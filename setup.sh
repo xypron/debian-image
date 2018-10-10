@@ -11,3 +11,5 @@ apt-get install -y linux-image-arm64 --reinstall
 adduser odroid --uid 9997 --disabled-password --gecos 'Default User,,,'
 echo odroid:odroid | chpasswd
 adduser odroid sudo
+cp /root/.vimrc /home/odroid
+chown odroid:odroid /home/odroid/.vimrc

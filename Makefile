@@ -62,6 +62,7 @@ copy:
 	sudo mkdir -p mnt/etc/flash-kernel/ubootenv.d/
 	sudo mkdir -p mnt/proc/device-tree/
 	sudo cp model mnt/proc/device-tree/
+	sudo cp .vimrc mnt/root
 
 stage2:
 	sudo cp setup.sh mnt
