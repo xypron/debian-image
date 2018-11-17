@@ -8,6 +8,8 @@ apt-get install -y apt-file bash-completion ca-certificates dnsutils \
 apt-get install -y -o Dpkg::Options::="--force-confold" flash-kernel
 apt-get install -y odroid-c2-u-boot-image
 apt-get install -y linux-image-arm64 --reinstall
+dpkg-reconfigure --frontend=noninteractive locales
+update-locale LANG="en_US.UTF-8" LANGUAGE="en_US.UTF-8" LC_ALL="en_US.UTF-8"
 adduser odroid --uid 9997 --disabled-password --gecos 'Default User,,,'
 echo odroid:odroid | chpasswd
 adduser odroid sudo
