@@ -28,11 +28,11 @@ http://debian.xypron.de/.
 
 A sudo user *odroid* with password *odroid* is provided.
 
-The created image file is called *image*.
+The created image file is called *odroid-c2-image*.
 
 To copy the image to an SD card use
 
-    sudo dd iflag=dsync oflag=dsync if=image of=/dev/sdX bs=16M
+    sudo dd iflag=dsync oflag=dsync if=odroid-c2-image of=/dev/sdX bs=16M
 
 Replace /dev/sdX by the actual device.
 **Beware of overwriting your harddisk by specifying the wrong device.**
