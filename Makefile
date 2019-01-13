@@ -79,7 +79,7 @@ stage2_qemu:
 	sudo rm mnt/setup.sh
 
 flash:
-	sudo dd if=/usr/lib/u-boot/Bananapi/u-boot-sunxi-with-spl.bin \
+	sudo dd if=mnt/usr/lib/u-boot/Bananapi/u-boot-sunxi-with-spl.bin \
 	of=banana-pi-image conv=fsync,notrunc bs=1024 seek=8
 
 unmount:
