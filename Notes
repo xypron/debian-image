@@ -1,0 +1,7 @@
+Most commands can be executed with fakeroot:
+mkfs.ext4, fdisk.
+
+Use fuse2fs to mount partions.
+
+Use fakechroot instead of chroot.
+
