@@ -7,6 +7,7 @@ apt-get install -y u-boot-sunxi
 apt-get install -y linux-image-armmp-lpae --reinstall
 dpkg-reconfigure --frontend=noninteractive locales
 update-locale LANG="en_US.UTF-8" LANGUAGE="en_US.UTF-8" LC_ALL="en_US.UTF-8"
+apt-file update
 adduser banana --uid 9997 --disabled-password --gecos 'Default User,,,'
 echo banana:banana | chpasswd
 adduser banana sudo
