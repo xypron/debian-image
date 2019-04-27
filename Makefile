@@ -60,7 +60,6 @@ copy:
 	sudo cp eth0 mnt/etc/network/interfaces.d/
 	sudo cp locale.gen mnt/etc/
 	sudo cp fstab mnt/etc/
-	sudo cp flash-kernel mnt/etc/default/
 	sudo cp sources.list mnt/etc/apt/
 	sudo cp hostname mnt/etc/hostname
 	sudo cp hosts mnt/etc/hosts
