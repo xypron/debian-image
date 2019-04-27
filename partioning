@@ -3,6 +3,7 @@ label-id: 0x6fe3a999
 device: image
 unit: sectors
 
-image1: start=    2048, size=  260096, type=ef
-image2: start=  262144, size=  786432, type=83, bootable
-image3: start= 1048576, size= 5242880, type=83
+image1: start=    2048, size= 1046528, type=0d
+image2: start= 1048576, size=  131072, type=ef
+image3: start= 1179648, size=  917504, type=83
+image4: start= 2097152, size= 5242880, type=83
