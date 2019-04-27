@@ -67,6 +67,7 @@ copy:
 	sudo cp model mnt/proc/device-tree/
 	sudo cp .vimrc mnt/root/
 	sudo cp config.txt mnt/boot/
+	sudo cp raspi3-firmware mnt/etc/default
 
 stage2:
 	sudo cp setup.sh mnt
