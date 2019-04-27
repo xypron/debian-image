@@ -1,0 +1,36 @@
+# Note that modifying this file DOES NOT automatically modify the boot
+# arguments used by your computer; this file is called only on
+# firmware or kernel upgrades. You should manually edit
+# /boot/firmware/cmdline.txt to match this file when any changes are
+# made.
+
+# CMA (Contiguous Memory Allocator) pool size - Defaults to 64M.  Uses
+# such as the vc4 video driver might benefit from larger assignations
+# (128M), but at a performance cost for the rest of the system
+#
+# https://people.freedesktop.org/~narmstrong/meson_drm_doc/gpu/vc4.html
+#
+#CMA=64M
+
+# Filesystem to mount on root. Defaults to the Raspberry's most usual
+# /dev/mmcblk0p2, but you can specify otherwise, including booting by
+# partition label (i.e. ROOTPART="LABEL=root")
+ROOTPART="UUID=afa724eb-deb7-4779-ba7d-b6553f4e34d3"
+
+# Main baremetal application that is started by the firmware once the
+# hardware has been initialized. Usually, this is the Linux kernel but
+# this can also be u-boot or barebox launched as a second level
+# bootloader. Possibles values are "auto", so the kernel image will be
+# autodetected from /boot and started directly by the firmware, or the
+# name of the image to use from /boot/firmware
+#KERNEL="auto"
+
+# Pass initramfs address as parameter of the KERNEL image.
+# If you don't intend to pass an initramfs to the image started by the
+# firmware, simply because you have a custom kernel that ships an
+# initramfs or because it will be handled by a second level bootloader
+# (like u-boot), set it to "no". Possibles values are "auto", so the
+# initramfs image will be autodetected from /boot and pass as parameter
+# of the KERNEL image. It can also be set to "no", in this case no
+# initramfs will be handled at all by the firmware.
+#INITRAMFS="auto"
