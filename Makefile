@@ -16,7 +16,6 @@ all:
 	make mount2
 	make copy
 	make $(STAGE2)
-	make flash
 	make unmount
 	make compress
 
@@ -61,7 +60,8 @@ copy:
 	sudo cp hosts mnt/etc/hosts
 	sudo mkdir -p mnt/proc/device-tree/
 	sudo cp model mnt/proc/device-tree/
-	sudo cp .vimrc mnt/root
+	sudo cp .vimrc mnt/root/
+	sudo cp config.txt mnt/boot/
 
 stage2:
 	sudo cp setup.sh mnt
@@ -77,14 +77,6 @@ stage2_qemu:
 	sudo chroot mnt /usr/bin/qemu-aarch64-static /bin/bash ./setup.sh
 	sudo rm mnt/usr/bin/qemu-aarch64-static
 	sudo rm mnt/setup.sh
-
-flash:
-	sudo dd if=mnt/usr/lib/u-boot/rpi3/bl1.bin.hardkernel \
-	  of=rpi3-image conv=fsync,notrunc bs=1 count=442
-	sudo dd if=mnt/usr/lib/u-boot/rpi3/bl1.bin.hardkernel \
-	  of=rpi3-image conv=fsync,notrunc bs=512 skip=1 seek=1
-	sudo dd if=mnt/usr/lib/u-boot/rpi3/u-boot.bin \
-	  of=rpi3-image conv=fsync,notrunc bs=512 seek=97
 
 unmount:
 	sync

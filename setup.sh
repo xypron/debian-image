@@ -13,3 +13,5 @@ echo rpi3:rpi3 | chpasswd
 adduser rpi3 sudo
 cp /root/.vimrc /home/rpi3
 chown rpi3:rpi3 /home/rpi3/.vimrc
+cp /usr/lib/raspi3-firmware/* /boot/
+cp /usr/lib/u-boot/rpi_3/u-boot.bin /boot/
