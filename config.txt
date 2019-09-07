@@ -15,7 +15,7 @@ initial_turbo=30
 # DO NOT overvoltage manually to not void warranty!
 over_voltage=0
 # Boot in AArch64 (64-bit) mode
-arm_control=0x200
+# arm_control=0x200
 # Fix mini UART input frequency, and setup/enable up the UART.
 enable_uart=1
 # Disable warning overlays as they don't work well together with linux's graphical output

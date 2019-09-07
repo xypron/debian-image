@@ -1,6 +1,6 @@
 
 MK_ARCH="${shell uname -m}"
-ifeq ("arm64", $(MK_ARCH))
+ifeq ("armv7l", $(MK_ARCH))
 	undefine FOREIGN
 	export STAGE2=stage2
 else
@@ -20,13 +20,13 @@ all:
 	make compress
 
 prepare: unmount
-	sudo rm -f rpi3-image rpi3-image.*
-	sudo dd if=/dev/zero of=rpi3-image bs=1024 seek=3670015 count=1
-	sudo sfdisk rpi3-image < partioning
-	sudo losetup -o 1048576 --sizelimit 535822336 /dev/loop1 rpi3-image
-	sudo losetup -o 536870912 --sizelimit 67108864 /dev/loop2 rpi3-image
-	sudo losetup -o 603979776 --sizelimit 469762048 /dev/loop3 rpi3-image
-	sudo losetup -o 1073741824 /dev/loop4 rpi3-image
+	sudo rm -f rpi3-32bit-image rpi3-32bit-image.*
+	sudo dd if=/dev/zero of=rpi3-32bit-image bs=1024 seek=3670015 count=1
+	sudo sfdisk rpi3-32bit-image < partioning
+	sudo losetup -o 1048576 --sizelimit 535822336 /dev/loop1 rpi3-32bit-image
+	sudo losetup -o 536870912 --sizelimit 67108864 /dev/loop2 rpi3-32bit-image
+	sudo losetup -o 603979776 --sizelimit 469762048 /dev/loop3 rpi3-32bit-image
+	sudo losetup -o 1073741824 /dev/loop4 rpi3-32bit-image
 	sudo mkfs.vfat -n FIRMWARE -i 1f78a30b /dev/loop1
 	sudo mkfs.vfat -n EFI -i 1f97b63b /dev/loop2
 	sudo mkfs.ext2 -L boot -U 84185ebb-74ba-4879-93ba-56adcdfbe8c7 /dev/loop3
@@ -37,15 +37,15 @@ prepare: unmount
 	sudo losetup -d /dev/loop1 || true
 
 mount:
-	sudo losetup -o 1048576 --sizelimit 535822336 /dev/loop1 rpi3-image
-	sudo losetup -o 536870912 --sizelimit 67108864 /dev/loop2 rpi3-image
-	sudo losetup -o 603979776 --sizelimit 469762048 /dev/loop3 rpi3-image
-	sudo losetup -o 1073741824 /dev/loop4 rpi3-image
+	sudo losetup -o 1048576 --sizelimit 535822336 /dev/loop1 rpi3-32bit-image
+	sudo losetup -o 536870912 --sizelimit 67108864 /dev/loop2 rpi3-32bit-image
+	sudo losetup -o 603979776 --sizelimit 469762048 /dev/loop3 rpi3-32bit-image
+	sudo losetup -o 1073741824 /dev/loop4 rpi3-32bit-image
 	sudo mkdir -p mnt
 	sudo mount /dev/loop4 mnt
 
 debootstrap:
-	sudo debootstrap $(FOREIGN) --arch arm64 buster mnt \
+	sudo debootstrap $(FOREIGN) --arch armhf buster mnt \
 	  http://ftp.de.debian.org/debian/
 
 mount2:
@@ -76,12 +76,12 @@ stage2:
 
 stage2_qemu:
 	sudo cp setup.sh mnt
-	sudo cp /usr/bin/qemu-aarch64-static mnt/usr/bin
+	sudo cp /usr/bin/qemu-arm-static mnt/usr/bin
 	test -f mnt/debootstrap/debootstrap && \
 	sudo chroot mnt /bin/bash /debootstrap/debootstrap --second-stage
-	sudo cp /usr/bin/qemu-aarch64-static mnt/usr/bin
-	sudo chroot mnt /usr/bin/qemu-aarch64-static /bin/bash ./setup.sh
-	sudo rm mnt/usr/bin/qemu-aarch64-static
+	sudo cp /usr/bin/qemu-arm-static mnt/usr/bin
+	sudo chroot mnt /usr/bin/qemu-arm-static /bin/bash ./setup.sh
+	sudo rm mnt/usr/bin/qemu-arm-static
 	sudo rm mnt/setup.sh
 
 unmount:
@@ -100,9 +100,9 @@ unmount:
 	sudo losetup -d /dev/loop1 || true
 
 compress:
-	fakeroot xz -9 -k rpi3-image
-	sha512sum rpi3-image.xz rpi3-image > rpi3-image.sha512
-	gpg -ab rpi3-image.sha512
+	fakeroot xz -9 -k rpi3-32bit-image
+	sha512sum rpi3-32bit-image.xz rpi3-32bit-image > rpi3-32bit-image.sha512
+	gpg -ab rpi3-32bit-image.sha512
 
 clean: unmount
-	sudo rm -f rpi3-image rpi3-image.*
+	sudo rm -f rpi3-32bit-image rpi3-32bit-image.*
