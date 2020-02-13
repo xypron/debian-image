@@ -6,4 +6,4 @@ unit: sectors
 image1: start=    2048, size= 1046528, type=0c
 image2: start= 1048576, size=  131072, type=ef
 image3: start= 1179648, size=  917504, type=83
-image4: start= 2097152, size= 5242880, type=83
+image4: start= 2097152, size= 6291456, type=83

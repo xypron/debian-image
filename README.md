@@ -1,8 +1,8 @@
-Build Debian SD card image for the Raspberry Pi 3 Model B Plus
+Build Debian SD card image for the Raspberry Pi 4 Model B Plus
 ==============================================================
 
 This project provides files to generate a Debian SD card image
-for the Hardkernel Raspberry Pi 3 Model B Plus.
+for the Hardkernel Raspberry Pi 4 Model B Plus.
 
 The following command installs the dependencies:
 
@@ -24,13 +24,13 @@ A new image is created with three partions:
 
 Debootstrap is used to install a base system.
 
-A sudo user *rpi3* with password *rpi3* is provided.
+A sudo user *rpi4* with password *rpi4* is provided.
 
-The created image file is called *rpi3-image*.
+The created image file is called *rpi4-image*.
 
 To copy the image to an SD card use
 
-    sudo dd iflag=dsync oflag=dsync if=rpi3-image of=/dev/sdX bs=16M
+    sudo dd iflag=dsync oflag=dsync if=rpi4-image of=/dev/sdX bs=16M
 
 Replace /dev/sdX by the actual device.
 **Beware of overwriting your harddisk by specifying the wrong device.**
@@ -38,7 +38,7 @@ Replace /dev/sdX by the actual device.
 After first boot
 ----------------
 
-Change the password of user rpi3.
+Change the password of user rpi4.
 
     passwd
 
