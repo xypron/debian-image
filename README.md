@@ -2,7 +2,7 @@ Build Debian SD card image for the Raspberry Pi 3 Model B Plus
 ==============================================================
 
 This project provides files to generate a Debian SD card image
-for the Hardkernel Raspberry Pi 3 Model B Plus.
+for the Raspberry Pi 3 Model B Plus.
 
 The following command installs the dependencies:
 
