@@ -1,8 +1,8 @@
-Build Debian SD card image for the Odroid C2
-============================================
+Build Debian SD card image for the Odroid HC4
+=============================================
 
 This project provides files to generate a Debian SD card image
-for the Hardkernel Odroid C2.
+for the Hardkernel Odroid HC4.
 
 The following command installs the dependencies:
 
@@ -28,7 +28,7 @@ http://debian.xypron.de/.
 
 A sudo user *odroid* with password *odroid* is provided.
 
-The created image file is called *odroid-c2-image*.
+The created image file is called *odroid-hc4-image*.
 
 To copy the image to an SD card use
 

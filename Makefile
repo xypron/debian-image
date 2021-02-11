@@ -21,12 +21,12 @@ all:
 	make compress
 
 prepare: unmount
-	sudo rm -f odroid-c2-image odroid-c2-image.*
-	sudo dd if=/dev/zero of=odroid-c2-image bs=1024 seek=3145727 count=1
-	sudo sfdisk odroid-c2-image < partioning
-	sudo losetup -o 1048576 --sizelimit 133169152 /dev/loop1 odroid-c2-image
-	sudo losetup -o 134217728 --sizelimit 402653184 /dev/loop2 odroid-c2-image
-	sudo losetup -o 536870912 /dev/loop3 odroid-c2-image
+	sudo rm -f odroid-hc4-image odroid-hc4-image.*
+	sudo dd if=/dev/zero of=odroid-hc4-image bs=1024 seek=3145727 count=1
+	sudo sfdisk odroid-hc4-image < partioning
+	sudo losetup -o 1048576 --sizelimit 133169152 /dev/loop1 odroid-hc4-image
+	sudo losetup -o 134217728 --sizelimit 402653184 /dev/loop2 odroid-hc4-image
+	sudo losetup -o 536870912 /dev/loop3 odroid-hc4-image
 	sudo mkfs.vfat -n EFI -i 1f97b63b /dev/loop1
 	sudo mkfs.ext2 -L boot -U 84185ebb-74ba-4879-93ba-56adcdfbe8c7 /dev/loop2
 	sudo mkfs.ext4 -L root -U afa724eb-deb7-4779-ba7d-b6553f4e34d3 /dev/loop3
@@ -35,9 +35,9 @@ prepare: unmount
 	sudo losetup -d /dev/loop1 || true
 
 mount:
-	sudo losetup -o 1048576 --sizelimit 133169152 /dev/loop1 odroid-c2-image
-	sudo losetup -o 134217728 --sizelimit 402653184 /dev/loop2 odroid-c2-image
-	sudo losetup -o 536870912 /dev/loop3 odroid-c2-image
+	sudo losetup -o 1048576 --sizelimit 133169152 /dev/loop1 odroid-hc4-image
+	sudo losetup -o 134217728 --sizelimit 402653184 /dev/loop2 odroid-hc4-image
+	sudo losetup -o 536870912 /dev/loop3 odroid-hc4-image
 	sudo mkdir -p mnt
 	sudo mount /dev/loop3 mnt
 
@@ -63,6 +63,7 @@ copy:
 	sudo mkdir -p mnt/proc/device-tree/
 	sudo cp model mnt/proc/device-tree/
 	sudo cp .vimrc mnt/root
+	sudo cp meson-sm1-odroid-hc4.dtb mnt/boot/efi
 
 stage2:
 	sudo cp setup.sh mnt
@@ -80,12 +81,12 @@ stage2_qemu:
 	sudo rm mnt/setup.sh
 
 flash:
-	sudo dd if=mnt/usr/lib/u-boot/odroid-c2/bl1.bin.hardkernel \
-	  of=odroid-c2-image conv=fsync,notrunc bs=1 count=442
-	sudo dd if=mnt/usr/lib/u-boot/odroid-c2/bl1.bin.hardkernel \
-	  of=odroid-c2-image conv=fsync,notrunc bs=512 skip=1 seek=1
-	sudo dd if=mnt/usr/lib/u-boot/odroid-c2/u-boot.bin \
-	  of=odroid-c2-image conv=fsync,notrunc bs=512 seek=97
+	sudo dd if=mnt/usr/lib/u-boot/odroid-hc4/bl1.bin.hardkernel \
+	  of=odroid-hc4-image conv=fsync,notrunc bs=1 count=442
+	sudo dd if=mnt/usr/lib/u-boot/odroid-hc4/bl1.bin.hardkernel \
+	  of=odroid-hc4-image conv=fsync,notrunc bs=512 skip=1 seek=1
+	sudo dd if=mnt/usr/lib/u-boot/odroid-hc4/u-boot.bin \
+	  of=odroid-hc4-image conv=fsync,notrunc bs=512 seek=97
 
 unmount:
 	sync
@@ -101,9 +102,9 @@ unmount:
 	sudo losetup -d /dev/loop1 || true
 
 compress:
-	fakeroot xz -9 -k odroid-c2-image
-	sha512sum odroid-c2-image.xz odroid-c2-image > odroid-c2-image.sha512
-	gpg -ab odroid-c2-image.sha512
+	fakeroot xz -9 -k odroid-hc4-image
+	sha512sum odroid-hc4-image.xz odroid-hc4-image > odroid-hc4-image.sha512
+	gpg -ab odroid-hc4-image.sha512
 
 clean: unmount
-	sudo rm -f odroid-c2-image odroid-c2-image.*
+	sudo rm -f odroid-hc4-image odroid-hc4-image.*
