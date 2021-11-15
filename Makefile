@@ -22,7 +22,7 @@ prepare: unmount
 	sudo rm -f nezha-image nezha-image.*
 	sudo dd if=/dev/zero of=nezha-image bs=1024 seek=3145727 count=1
 	sudo sfdisk nezha-image < partioning
-	sudo losetup -o 1048576 --sizelimit 113246208 /dev/loop1 nezha-image
+	sudo losetup -o 20971520 --sizelimit 113246208 /dev/loop1 nezha-image
 	sudo losetup -o 134217728 --sizelimit 402653184 /dev/loop2 nezha-image
 	sudo losetup -o 536870912 --sizelimit 2684321792 /dev/loop3 nezha-image
 	sudo mkfs.vfat -n EFI -i 1f97b63b /dev/loop1
@@ -33,9 +33,9 @@ prepare: unmount
 	sudo losetup -d /dev/loop1 || true
 
 mount:
-	sudo losetup -o 1048576 --sizelimit 133169152 /dev/loop1 nezha-image
+	sudo losetup -o 20971520 --sizelimit 113246208 /dev/loop1 nezha-image
 	sudo losetup -o 134217728 --sizelimit 402653184 /dev/loop2 nezha-image
-	sudo losetup -o 536870912 /dev/loop3 nezha-image
+	sudo losetup -o 536870912 --sizelimit 2684321792 /dev/loop3 nezha-image
 	sudo mkdir -p mnt
 	sudo mount /dev/loop3 mnt
 
@@ -53,7 +53,7 @@ copy:
 	sudo cp hostname mnt/etc/hostname
 	sudo cp hosts mnt/etc/hosts
 	mkimage -T script -n 'Linux' -d boot.txt boot.scr
-	sudo cp boot.scr mnt/boot
+	sudo cp boot.scr mnt/boot/efi
 
 stage2:
 	sudo cp setup.sh mnt

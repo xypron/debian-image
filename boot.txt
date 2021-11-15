@@ -1,4 +1,4 @@
-setenv bootargs earlyprintk clk_ignore_unused console=ttyS0,115200 root=UUID=afa724eb-deb7-4779-ba7d-b6553f4e34d3
+setenv bootargs earlyprintk clk_ignore_unused console=ttyS0,115200 root=/dev/mmcblk1p3
 load mmc 0:2 $fdt_addr_r dtb
 load mmc 0:2 $kernel_addr_r zImage
 booti $kernel_addr_r - $fdt_addr_r
