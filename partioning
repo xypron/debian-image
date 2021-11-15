@@ -1,8 +1,9 @@
-label: dos
-label-id: 0x6fe3a999
+label: gpt
+label-id: 21EC8518-BF99-9240-8275-1CCD95D00C9B
 device: image
 unit: sectors
 
-image1: start=    2048, size=  260096, type=ef
-image2: start=  262144, size=  786432, type=83, bootable
-image3: start= 1048576, size= 5242880, type=83
+image1: start=   40960, size=  221184, type=C12A7328-F81F-11D2-BA4B-00A0C93EC93B name="EFI"
+image2: start=  262144, size=  786432, type=0FC63DAF-8483-4772-8E79-3D69D8477DE4 name="boot"
+image3: start= 1048576, size= 5242816, type=0FC63DAF-8483-4772-8E79-3D69D8477DE4 name="root"
+image4: start=    2048, size=   38912, type=8DA63339-0007-60C0-C436-083AC8230908 name="firmware"
