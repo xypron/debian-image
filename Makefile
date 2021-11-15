@@ -52,8 +52,8 @@ copy:
 	sudo cp fstab mnt/etc/
 	sudo cp hostname mnt/etc/hostname
 	sudo cp hosts mnt/etc/hosts
-	mkimage -T scripts -n 'Linux' -d boot.txt boot.scr
-	sudo cp boot.scr mnt/boot/efi
+	mkimage -T script -n 'Linux' -d boot.txt boot.scr
+	sudo cp boot.scr mnt/boot
 
 stage2:
 	sudo cp setup.sh mnt
