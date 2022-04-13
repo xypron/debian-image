@@ -1,5 +1,7 @@
 #!/bin/sh
 export DEBIAN_FRONTEND=noninteractive
+export FK_MACHINE="Hardkernel ODROID-C2"
+
 apt-get update --allow-insecure-repositories
 apt-get install -y xypron-keyring --allow-unauthenticated
 apt-get update
